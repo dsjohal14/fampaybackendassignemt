@@ -10,6 +10,7 @@ from django.core.paginator import Paginator
 from django.core import serializers
 from django.http import HttpResponse
 from django.db.models import Q
+from django.utils import timezone
 
 load_dotenv()
 
@@ -43,8 +44,9 @@ def fetch_video(api_key_index=0):
                 title = video_obj["snippet"]["title"]
                 description = video_obj["snippet"]["description"]
                 thumbnail_url = video_obj["snippet"]["thumbnails"]["default"]["url"]
-                published_at = datetime.strptime(video_obj["snippet"]["publishedAt"], '%Y-%m-%dT%H:%M:%SZ')
-
+                published_at_str = video_obj["snippet"]["publishedAt"]
+                published_at_naive = datetime.strptime(published_at_str, '%Y-%m-%dT%H:%M:%SZ')
+                published_at = timezone.make_aware(published_at_naive, timezone.utc)
                 Video.objects.get_or_create(
                     video_id=video_id,
                     defaults={
