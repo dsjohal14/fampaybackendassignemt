@@ -1,3 +1,14 @@
 from django.db import models
 
-# Create your models here.
+class Video(models.Model):
+    video_id = models.CharField(max_length=11, primary_key=True)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    thumbnail_url = models.CharField(max_length=2048)
+    publishedAt = models.DateTimeField(db_index=True)
+
+    class Meta:
+        ordering = ['-publishedAt']
+
+    def __str__(self):
+        return self.title
