@@ -1,10 +1,16 @@
 # fampaybackendassignemt
-# Installation
-1. Build a Docker Image
+
+# Setting up
+Create a .env file in the root of the project directory with the following content:
 ```bash
-docker build -t youtubeapi .
+key=YOUR_YOUTUBE_API_KEY1,YOUR_YOUTUBE_API_KEY2,YOUR_YOUTUBE_API_KEY3
 ```
-2. Run the image for running docker container
+# Installation
+1. Build Docker Image
+```bash
+docker build -t fampaybackendassignment .
+```
+2. Run the image
 ```bash
 docker-compose up -d
 ```
