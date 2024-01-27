@@ -7,6 +7,6 @@ class ApirunConfig(AppConfig):
     name = 'youtubefetchapi'
     
     def ready(self):
-        running_devserver = len(sys.argv) > 1 and sys.argv[1] == 'runserver'
-        if running_devserver:
+        RUNNING_DEVSERVER = len(sys.argv) > 1 and sys.argv[1] == 'runserver'
+        if RUNNING_DEVSERVER:
             fetch_video()
