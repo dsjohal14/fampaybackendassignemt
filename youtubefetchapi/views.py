@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from django.core.paginator import Paginator
 from django.core import serializers
 from django.http import HttpResponse
+from django.db.models import Q
 
 load_dotenv()
 
@@ -76,3 +77,19 @@ def view_video(request):
 
     videos_per_page = serializers.serialize('json', page_obj.object_list)
     return HttpResponse(videos_per_page, content_type="text/json-comment-filtered")
+
+def search_video(request):
+    q = request.GET.get("q", "")
+    query_terms = q.split()
+
+    Video = apps.get_model('youtubeFetchApi', 'Video')
+
+    query_objects = Q()
+    for term in query_terms:
+        if term: 
+            query_objects |= Q(title__icontains=term) | Q(description__icontains=term)
+
+    all_videos = Video.objects.filter(query_objects).distinct()
+
+    all_videos_list = serializers.serialize('json', all_videos)
+    return HttpResponse(all_videos_list, content_type="text/json-comment-filtered")
