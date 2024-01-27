@@ -1,5 +1,5 @@
 from django.apps import AppConfig
-from .views import fetch_video
+from .views import start_fetch_video_thread
 import sys
 
 class ApirunConfig(AppConfig):
@@ -9,4 +9,4 @@ class ApirunConfig(AppConfig):
     def ready(self):
         RUNNING_DEVSERVER = len(sys.argv) > 1 and sys.argv[1] == 'runserver'
         if RUNNING_DEVSERVER:
-            fetch_video()
+            start_fetch_video_thread()
